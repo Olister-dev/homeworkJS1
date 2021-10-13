@@ -5,11 +5,19 @@ const deleteButton = document.querySelector(".main__top-delete");
 const elementsList = document.querySelector(".main__bot-list");
 
 //Events
-document.addEventListener("DOMContentLoaded", displayElement);
+document.addEventListener("DOMContentLoaded", displayList);
 addButton.addEventListener("click", addElement);
 deleteButton.addEventListener("click", deleteElement);
 
-elementsArr = [];
+let elementsArr = [];
+const AGE = 25;
+
+if (elementsArr === null) {
+  elementsArr = [];
+} else {
+  elementsArr = JSON.parse(localStorage.getItem("list"));
+  console.log(elementsArr);
+}
 
 //Functions
 function saveLocal(list) {
@@ -20,35 +28,32 @@ function addElement(e) {
   e.preventDefault();
 
   const inputValue = elementInput.value;
-  const tempArr = {};
   if (inputValue === "") {
     return alert("Пусте поле");
-  } else if (elementsArr.length >= 25) {
+  } else if (elementsArr.length >= AGE) {
     return alert("Максимальна черга");
   } else {
-    tempArr.input = inputValue;
-    let i = elementsArr.length;
-    elementsArr[i] = tempArr;
+    elementsArr.push(inputValue);
     console.log(elementsArr);
     saveLocal(elementsArr);
-    displayElement();
+    displayList();
   }
 }
 
 function deleteElement() {
-  elementsArr.pop();
+  elementsArr.shift();
   saveLocal(elementsArr);
-  displayElement();
+  displayList();
 }
 
-function displayElement() {
+function displayList() {
   if (localStorage.getItem("list") === null) {
     localStorage.setItem("list", JSON.stringify([]));
   } else {
     const list = JSON.parse(localStorage.getItem("list"));
     let display = "";
-    list.map((item) => {
-      display += "<li>" + item.input + "</li>";
+    list.forEach((item) => {
+      display += "<li>" + item + "</li>";
     });
     elementsList.innerHTML = display;
     elementInput.value = "";
