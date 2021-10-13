@@ -12,7 +12,7 @@ deleteButton.addEventListener("click", deleteElement);
 let elementsArr = [];
 const AGE = 25;
 
-if (elementsArr === null) {
+if (localStorage.getItem("list") === null) {
   elementsArr = [];
 } else {
   elementsArr = JSON.parse(localStorage.getItem("list"));
@@ -47,15 +47,10 @@ function deleteElement() {
 }
 
 function displayList() {
-  if (localStorage.getItem("list") === null) {
-    localStorage.setItem("list", JSON.stringify([]));
-  } else {
-    const list = JSON.parse(localStorage.getItem("list"));
-    let display = "";
-    list.forEach((item) => {
-      display += "<li>" + item + "</li>";
-    });
-    elementsList.innerHTML = display;
-    elementInput.value = "";
-  }
+  let display = "";
+  elementsArr.forEach((item) => {
+    display += "<li>" + item + "</li>";
+  });
+  elementsList.innerHTML = display;
+  elementInput.value = "";
 }
