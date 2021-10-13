@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+header h1 {
+  margin: 0 auto;
+  max-width: 520px;
+}
+
 .main {
   max-width: 520px;
   margin: 0 auto;
